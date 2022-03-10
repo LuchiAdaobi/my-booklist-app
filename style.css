@@ -1,0 +1,25 @@
+body {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .alert {
+    transition: all 0.3s ease-in-out;
+    animation: fromTop 0.3s forwards;
+  }
+  
+  .delete {
+    background: #eb6864;
+  }
+  .delete:hover {
+    background: #ec211a;
+  }
+  
+  @keyframes fromTop {
+    0% {
+      transform: translateY(-1090px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
