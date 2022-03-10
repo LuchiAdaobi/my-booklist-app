@@ -17,13 +17,18 @@ body {
 
   .fav{
     color:#eb6864;
-    display: none;
+    /* display: none; */
   }
   .toggle{
-    /* display: none; */
+    display: none;
     color: #eb6864;
   }
-  
+  .container .book{
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    font-size: 2.5rem;
+  }
   @keyframes fromTop {
     0% {
       transform: translateY(-1090px);
