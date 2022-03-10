@@ -14,6 +14,15 @@ body {
   .delete:hover {
     background: #ec211a;
   }
+
+  .fav{
+    color:#eb6864;
+    display: none;
+  }
+  .toggle{
+    /* display: none; */
+    color: #eb6864;
+  }
   
   @keyframes fromTop {
     0% {
