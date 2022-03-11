@@ -118,9 +118,9 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     UI.addBookToList(book);
 
     // Add book to Store
-    Store.addBook(book);
+    // Store.addBook(book);
 
-    // Show succes message
+    // Show success message
     UI.showAlert('Book Added', 'success');
 
     // Clear Fields
@@ -133,6 +133,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   // remove book from UI
   UI.deleteBook(e.target);
   //   remove book from store
+  //   Store.removeBook(e.target);
 });
 
 // EVENT: ADD TO FAVORITE

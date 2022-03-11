@@ -3,6 +3,9 @@ body {
     margin: 0 auto;
     padding: 0 2rem;
   }
+  a{
+    text-decoration: none;
+  }
   .alert {
     transition: all 0.3s ease-in-out;
     animation: fromTop 0.3s forwards;
@@ -22,6 +25,13 @@ body {
   .fav.active{
     color:#eb6864;
   }
+  .favorite{
+    cursor: pointer;
+  }
+  .favorite:hover{
+    color:#eb6864;
+  } 
+ 
   .container .book{
     text-align: center;
     display: block;
