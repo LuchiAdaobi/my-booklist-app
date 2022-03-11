@@ -1,4 +1,4 @@
-// BOOK CLASS: Represent
+// BOOK CLASS: Represent a book
 
 class Book {
   constructor(title, author, isbn) {
@@ -70,6 +70,15 @@ class UI {
     }
   }
 
+  // Add Favorite
+  static addFav(el) {
+    if (el.classList.contains('active')) {
+      el.classList.remove('active');
+    } else {
+      el.classList.add('active');
+    }
+  }
+
   //   Alert Messages
   static showAlert(message, className) {
     const div = document.createElement('div');
@@ -118,7 +127,7 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     UI.addBookToList(book);
 
     // Add book to Store
-    // Store.addBook(book);
+    Store.addBook(book);
 
     // Show success message
     UI.showAlert('Book Added', 'success');
@@ -133,9 +142,13 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   // remove book from UI
   UI.deleteBook(e.target);
   //   remove book from store
-  //   Store.removeBook(e.target);
+  Store.removeBook(
+    e.target.parentElement.previousElementSibling.previousElementSibling
+      .textContent
+  );
 });
 
 // EVENT: ADD TO FAVORITE
+const fav = document.querySelector('.fav');
 
 // EVENT: REMOVE FROM FAVORITE
