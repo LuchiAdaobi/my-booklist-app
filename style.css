@@ -16,12 +16,11 @@ body {
   }
 
   .fav{
-    color:#eb6864;
+    color:gray;
     /* display: none; */
   }
-  .toggle{
-    display: none;
-    color: #eb6864;
+  .fav.active{
+    color:#eb6864;
   }
   .container .book{
     text-align: center;

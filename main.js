@@ -9,14 +9,13 @@ class Book {
 }
 
 // STORE CLASS: Handles Storage
-
-
+class Store {}
 
 // UI CLASS: Handles the UI Display
 
 class UI {
   static displayBooks() {
-    const StoredBooks = [
+    const storedBooks = [
       {
         title: 'Harry Potter',
         author: 'J.K Rowling',
@@ -29,7 +28,7 @@ class UI {
       },
     ];
 
-    const books = StoredBooks;
+    const books = storedBooks;
 
     books.forEach((book) => UI.addBookToList(book));
   }
@@ -43,8 +42,7 @@ class UI {
     <td>${book.author}</td>
     <td>${book.isbn}</td>
     <td><a href ="#" class =" btn btn-danger btn-sm delete">X</a></td>
-    <td><i class="fa-regular fa-heart fav"></i></td>
-    <td><i class="fa-solid fa-heart toggle"></i></td>
+    <td><i class="fa-solid fa-heart fav"></i></td>
     `;
 
     list.appendChild(row);
@@ -54,6 +52,7 @@ class UI {
   static deleteBook(el) {
     if (el.classList.contains('delete')) {
       el.parentElement.parentElement.remove();
+      UI.showAlert('Book Removed', 'success');
     }
   }
 
@@ -116,9 +115,6 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 document.querySelector('#book-list').addEventListener('click', (e) => {
   // remove book from UI
   UI.deleteBook(e.target);
-
-  //  Show delete message
-  UI.showAlert('Book Removed', 'success');
 });
 
 // EVENT: ADD TO FAVORITE
