@@ -9,26 +9,40 @@ class Book {
 }
 
 // STORE CLASS: Handles Storage
-class Store {}
+class Store {
+  static getBooks() {
+    let books;
+    if (localStorage.getItem('books') === null) {
+      books = [];
+    } else {
+      books = JSON.parse(localStorage.getItem('books'));
+    }
+    return books;
+  }
+
+  static addBook(book) {
+    const books = Store.getBooks();
+    books.push(book);
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+
+  static removeBook(isbn) {
+    const books = Store.getBooks();
+    books.forEach((book, index) => {
+      if (book.isbn === isbn) {
+        books.splice(index, 1);
+      }
+    });
+
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+}
 
 // UI CLASS: Handles the UI Display
 
 class UI {
   static displayBooks() {
-    const storedBooks = [
-      {
-        title: 'Harry Potter',
-        author: 'J.K Rowling',
-        isbn: '28467294',
-      },
-      {
-        title: 'Alice in Wonderland',
-        author: 'Lewis Carroll',
-        isbn: '28467294',
-      },
-    ];
-
-    const books = storedBooks;
+    const books = Store.getBooks();
 
     books.forEach((book) => UI.addBookToList(book));
   }
@@ -41,8 +55,8 @@ class UI {
     <td>${book.title}</td>
     <td>${book.author}</td>
     <td>${book.isbn}</td>
-    <td><a href ="#" class =" btn btn-danger btn-sm delete">X</a></td>
     <td><i class="fa-solid fa-heart fav"></i></td>
+    <td><a href ="#" class =" btn btn-danger btn-sm delete">X</a></td>
     `;
 
     list.appendChild(row);
@@ -103,6 +117,9 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
     //   Add book to UI
     UI.addBookToList(book);
 
+    // Add book to Store
+    Store.addBook(book);
+
     // Show succes message
     UI.showAlert('Book Added', 'success');
 
@@ -115,6 +132,7 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 document.querySelector('#book-list').addEventListener('click', (e) => {
   // remove book from UI
   UI.deleteBook(e.target);
+  //   remove book from store
 });
 
 // EVENT: ADD TO FAVORITE
