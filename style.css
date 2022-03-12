@@ -23,6 +23,9 @@ body {
     margin-left: 1.5rem;
     cursor: pointer;
   }
+  .fav:hover{
+    color:#eb6864;
+  }
   .fav.active{
     color:#eb6864;
   }
