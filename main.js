@@ -69,21 +69,16 @@ class FavStore {
     localStorage.setItem('favBooks', JSON.stringify(favBooks));
   }
 
-  static removeFavBook(book) {
+  static removeFavBook() {
     //   Get currently stored books
-    // const favBooks = Store.getBooks();
+    const favBooks = Store.getBooks();
     // iterate through "books" array
-    // favBooks.forEach((book, index) => {
-    // check if current iterated item's "isbn" matches passsed "isbn" param
-    // if (book.isbn === isbn) {
-    //   splice out current iterated item from array by its index
-    //   favBooks.splice(book, 1);
+    favBooks.forEach((favbook) => {
+      localStorage.removeItem(favbook);
+    });
 
-    localStorage.removeItem(book);
+    localStorage.setItem('favBooks', JSON.stringify(favBooks));
   }
-  // });
-
-  // localStorage.setItem('favBooks', JSON.stringify(favBooks));
 }
 
 // UI CLASS: Handles the UI Display
@@ -157,6 +152,20 @@ class UI {
 
     favBooks.forEach((book) => UI.addBookToList(book));
   }
+
+  //   RELOAD Page
+
+  static reloadBtn() {
+    const reload = document.createElement('div');
+    reload.innerHTML = `<h1>Back to Books</h1> `;
+
+    // Find the desired parent element and place the new alert within it
+    const container = document.querySelector('.container');
+
+    const bookList = document.querySelector('#book-list');
+    // take the container and insert thee 'alert' before the form
+    container.insertBefore(reload, bookList);
+  }
 }
 
 // EVENT HANDLERS
@@ -220,19 +229,29 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 
   // Remove book from Store
   if (e.target.classList.contains('active')) {
-    e.target.classList.remove('active');
     FavStore.removeFavBook(e.target.parentElement);
+    e.target.classList.remove('active');
+    // Show success message
+    UI.showAlert('Book Removed from Favorite', 'danger');
   } else {
     //   Add Favorite book to store
     e.target.classList.add('active');
     FavStore.addFavBook(book);
+    // Show success message
+    UI.showAlert('Book Added To Favorite', 'success');
   }
 });
 
 // EVENT: Display favorites
 document.querySelector('#fav').addEventListener('click', () => {
-  document.querySelector('#book-list').innerHTML = '';
+  const bookList = document.querySelector('#book-list');
+  bookList.innerHTML = '';
 
+  if (bookList.innerHTML === '' || UI.displayFavBooks === '') {
+    UI.showAlert('You have not yet added book to favorite', 'danger');
+    // UI.reloadBtn();
+  }
   //   Display Favorite Books
   UI.displayFavBooks();
+  UI.reloadBtn();
 });
