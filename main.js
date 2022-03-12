@@ -68,6 +68,22 @@ class FavStore {
 
     localStorage.setItem('favBooks', JSON.stringify(favBooks));
   }
+
+  static removeFavBook(book) {
+    //   Get currently stored books
+    // const favBooks = Store.getBooks();
+    // iterate through "books" array
+    // favBooks.forEach((book, index) => {
+    // check if current iterated item's "isbn" matches passsed "isbn" param
+    // if (book.isbn === isbn) {
+    //   splice out current iterated item from array by its index
+    //   favBooks.splice(book, 1);
+
+    localStorage.removeItem(book);
+  }
+  // });
+
+  // localStorage.setItem('favBooks', JSON.stringify(favBooks));
 }
 
 // UI CLASS: Handles the UI Display
@@ -106,17 +122,6 @@ class UI {
     }
   }
 
-  // Add Favorite
-  //   static addFav(el) {
-  //     if (el.classList.contains('active')) {
-  //       el.classList.remove('active');
-  //       //   FavStore.removeFavBook();
-  //     } else {
-  //       el.classList.add('active');
-  //       //   FavStore.addFavBook(UI);
-  //     }
-  //   }
-
   //   Alert Messages
   static showAlert(message, className) {
     //   Creates a DOM Div element
@@ -142,6 +147,15 @@ class UI {
     document.querySelector('#title').value = '';
     document.querySelector('#author').value = '';
     document.querySelector('#isbn').value = '';
+  }
+
+  //   Display favorite books
+
+  static displayFavBooks() {
+    // get currently stored books
+    const favBooks = FavStore.getBooks();
+
+    favBooks.forEach((book) => UI.addBookToList(book));
   }
 }
 
@@ -197,7 +211,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 
 document.querySelector('#book-list').addEventListener('click', (e) => {
   // Get values from table
-  const title = e.target.parentElement.textContent;
+  const title = document.querySelector('#title').value;
   const author = document.querySelector('#author').value;
   const isbn = document.querySelector('#isbn').value;
 
@@ -207,7 +221,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   // Remove book from Store
   if (e.target.classList.contains('active')) {
     e.target.classList.remove('active');
-    FavStore.removeFavBook(book);
+    FavStore.removeFavBook(e.target.parentElement);
   } else {
     //   Add Favorite book to store
     e.target.classList.add('active');
@@ -216,4 +230,9 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 });
 
 // EVENT: Display favorites
+document.querySelector('#fav').addEventListener('click', () => {
+  document.querySelector('#book-list').innerHTML = '';
 
+  //   Display Favorite Books
+  UI.displayFavBooks();
+});
