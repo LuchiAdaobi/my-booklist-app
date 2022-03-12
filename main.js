@@ -156,15 +156,8 @@ class UI {
   //   RELOAD Page
 
   static reloadBtn() {
-    const reload = document.createElement('div');
-    reload.innerHTML = `<h1>Back to Books</h1> `;
-
-    // Find the desired parent element and place the new alert within it
-    const container = document.querySelector('.container');
-
-    const bookList = document.querySelector('#book-list');
-    // take the container and insert thee 'alert' before the form
-    container.insertBefore(reload, bookList);
+    const reload = document.querySelector('#reload-btn');
+    reload.innerHTML = `<button onClick="window.location.reload()" class =" btn btn-primary mt-4 ">Back to Books</button> `;
   }
 }
 
@@ -176,7 +169,6 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
 // EVENT: ADD BOOK
 document.querySelector('#book-form').addEventListener('submit', (e) => {
   e.preventDefault();
-
   //   Get Form Values
   const title = document.querySelector('#title').value;
   const author = document.querySelector('#author').value;
@@ -247,11 +239,13 @@ document.querySelector('#fav').addEventListener('click', () => {
   const bookList = document.querySelector('#book-list');
   bookList.innerHTML = '';
 
-  if (bookList.innerHTML === '' || UI.displayFavBooks === '') {
-    UI.showAlert('You have not yet added book to favorite', 'danger');
-    // UI.reloadBtn();
-  }
   //   Display Favorite Books
   UI.displayFavBooks();
-  UI.reloadBtn();
+
+  if (bookList.innerHTML === '') {
+    UI.showAlert('You have not yet added book to favorite', 'danger');
+    UI.reloadBtn();
+  } else {
+    UI.reloadBtn();
+  }
 });
