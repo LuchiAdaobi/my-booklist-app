@@ -69,12 +69,14 @@ class FavStore {
     localStorage.setItem('favBooks', JSON.stringify(favBooks));
   }
 
-  static removeFavBook() {
+  static removeFavBook(isbn) {
     //   Get currently stored books
     const favBooks = Store.getBooks();
     // iterate through "books" array
-    favBooks.forEach((favbook) => {
-      localStorage.removeItem(favbook);
+    favBooks.forEach((book, index) => {
+      if (book.isbn === isbn) {
+        favBooks.splice(index, 1);
+      }
     });
 
     localStorage.setItem('favBooks', JSON.stringify(favBooks));
@@ -98,11 +100,13 @@ class UI {
     const row = document.createElement('tr');
     // store input in new table row element
     row.innerHTML = `
-    <td>${book.title}</td>
-    <td>${book.author}</td>
-    <td>${book.isbn}</td>
-    <td><i class="fa-solid fa-heart fav"></i></td>
-    <td><a href ="#" class =" btn btn-danger btn-sm delete">X</a></td>
+    <td id="book-title">${book.title}</td>
+    <td id="book-author">${book.author}</td>
+    <td id="book=isbn">${book.isbn}</td>
+    <td id="book-fav"><i class="fa-solid fa-heart fav"></i></td>
+    <td id="book-check"><label for="check"></label>
+    <input type ='checkbox' class='check text-primary id = "check"'></input></td>
+    <td id="book-delete"><a href ="#" class =" btn btn-danger btn-sm delete">X</a></td>
     `;
     // add new row to the table
     list.appendChild(row);
@@ -211,41 +215,43 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 // EVENT: ADD TO FAVORITE
 
 document.querySelector('#book-list').addEventListener('click', (e) => {
+  console.log(e.target);
   // Get values from table
-  const title = document.querySelector('#title').value;
-  const author = document.querySelector('#author').value;
-  const isbn = document.querySelector('#isbn').value;
+  const title = document.querySelector('#book-title').textContent;
+  const author = document.querySelector('#book-author').textContent;
+  const isbn = document.querySelector('#book-isbn').textContent;
+  // const fav = document.querySelector('#book-fav').value;
 
   //   Instantiate book
   const book = new Book(title, author, isbn);
 
   // Remove book from Store
   if (e.target.classList.contains('active')) {
-    FavStore.removeFavBook(e.target.parentElement);
     e.target.classList.remove('active');
-    // Show success message
+    FavStore.removeFavBook(e.target.parentElement.parentElement);
+    // Show delete message
     UI.showAlert('Book Removed from Favorite', 'danger');
   } else {
-    //   Add Favorite book to store
-    e.target.classList.add('active');
-    FavStore.addFavBook(book);
     // Show success message
+    e.target.classList.add('active');
+    //   Add Favorite book to store
+    FavStore.addFavBook(book);
     UI.showAlert('Book Added To Favorite', 'success');
   }
 });
 
 // EVENT: Display favorites
-document.querySelector('#fav').addEventListener('click', () => {
-  const bookList = document.querySelector('#book-list');
-  bookList.innerHTML = '';
+// document.querySelector('#fav').addEventListener('click', () => {
+//   const bookList = document.querySelector('#book-list');
+//   bookList.innerHTML = '';
 
-  //   Display Favorite Books
-  UI.displayFavBooks();
+//   //   Display Favorite Books
+//   UI.displayFavBooks();
 
-  if (bookList.innerHTML === '') {
-    UI.showAlert('You have not yet added book to favorite', 'danger');
-    UI.reloadBtn();
-  } else {
-    UI.reloadBtn();
-  }
-});
+//   if (bookList.innerHTML === '') {
+//     UI.showAlert('You have not yet added book to favorite', 'danger');
+//     UI.reloadBtn();
+//   } else {
+//     UI.reloadBtn();
+//   }
+// });
