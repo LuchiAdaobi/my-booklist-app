@@ -102,7 +102,7 @@ class UI {
     row.innerHTML = `
     <td id="book-title">${book.title}</td>
     <td id="book-author">${book.author}</td>
-    <td id="book=isbn">${book.isbn}</td>
+    <td id="book-isbn">${book.isbn}</td>
     <td id="book-fav"><i class="fa-solid fa-heart fav"></i></td>
     <td id="book-check"><label for="check"></label>
     <input type ='checkbox' class='check text-primary id = "check"'></input></td>
@@ -208,7 +208,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   //   remove book from store
   Store.removeBook(
     e.target.parentElement.previousElementSibling.previousElementSibling
-      .textContent
+      .previousElementSibling.textContent
   );
 });
 
@@ -220,7 +220,6 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   const title = document.querySelector('#book-title').textContent;
   const author = document.querySelector('#book-author').textContent;
   const isbn = document.querySelector('#book-isbn').textContent;
-  // const fav = document.querySelector('#book-fav').value;
 
   //   Instantiate book
   const book = new Book(title, author, isbn);
@@ -228,7 +227,9 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   // Remove book from Store
   if (e.target.classList.contains('active')) {
     e.target.classList.remove('active');
-    FavStore.removeFavBook(e.target.parentElement.parentElement);
+    FavStore.removeFavBook(
+      e.target.parentElement.previousElementSibling.textContent
+    );
     // Show delete message
     UI.showAlert('Book Removed from Favorite', 'danger');
   } else {
@@ -241,17 +242,17 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 });
 
 // EVENT: Display favorites
-// document.querySelector('#fav').addEventListener('click', () => {
-//   const bookList = document.querySelector('#book-list');
-//   bookList.innerHTML = '';
+document.querySelector('#fav').addEventListener('click', () => {
+  const bookList = document.querySelector('#book-list');
+  bookList.innerHTML = '';
 
-//   //   Display Favorite Books
-//   UI.displayFavBooks();
+  //   Display Favorite Books
+  UI.displayFavBooks();
 
-//   if (bookList.innerHTML === '') {
-//     UI.showAlert('You have not yet added book to favorite', 'danger');
-//     UI.reloadBtn();
-//   } else {
-//     UI.reloadBtn();
-//   }
-// });
+  if (bookList.innerHTML === '') {
+    UI.showAlert('You have not yet added book to favorite', 'danger');
+    UI.reloadBtn();
+  } else {
+    UI.reloadBtn();
+  }
+});
