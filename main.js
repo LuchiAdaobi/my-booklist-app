@@ -213,9 +213,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 });
 
 // EVENT: ADD TO FAVORITE
-
 document.querySelector('#book-list').addEventListener('click', (e) => {
-  console.log(e.target);
   // Get values from table
   const title = document.querySelector('#book-title').textContent;
   const author = document.querySelector('#book-author').textContent;
@@ -225,7 +223,13 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   const book = new Book(title, author, isbn);
 
   // Remove book from Store
+  // favBooks.forEach((book) => UI.addBookToList(book));
+  // book.forEach((favBook) => {
+    function addRemoveFav(){
+      
+    }
   if (e.target.classList.contains('active')) {
+    console.log(e.target);
     e.target.classList.remove('active');
     FavStore.removeFavBook(
       e.target.parentElement.previousElementSibling.textContent
@@ -240,6 +244,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
     UI.showAlert('Book Added To Favorite', 'success');
   }
 });
+// });
 
 // EVENT: Display favorites
 document.querySelector('#fav').addEventListener('click', () => {
