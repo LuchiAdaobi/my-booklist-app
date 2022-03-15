@@ -153,7 +153,6 @@ class UI {
   static displayFavBooks() {
     // get currently stored books
     const favBooks = FavStore.getBooks();
-
     favBooks.forEach((book) => UI.addBookToList(book));
   }
 
@@ -221,9 +220,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 
   //   Instantiate book
   const book = new Book(title, author, isbn);
-
   if (e.target.classList.contains('active')) {
-    console.log(e.target);
     e.target.classList.remove('active');
     // Remove book from Store
     FavStore.removeFavBook(
@@ -234,24 +231,24 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   } else {
     // Show success message
     e.target.classList.add('active');
-    //   Add Favorite book to store
-    FavStore.addFavBook(book);
-    UI.showAlert('Book Added To Favorite', 'success');
   }
+  //   Add Favorite book to store
+  FavStore.addFavBook(book);
+  UI.showAlert('Book Added To Favorite', 'success');
 });
 
 // EVENT: Display favorites
-document.querySelector('#fav').addEventListener('click', () => {
-  const bookList = document.querySelector('#book-list');
-  bookList.innerHTML = '';
+// document.querySelector('#fav').addEventListener('click', () => {
+//   const bookList = document.querySelector('#book-list');
+//   bookList.innerHTML = '';
 
-  //   Display Favorite Books
-  UI.displayFavBooks();
+//   //   Display Favorite Books
+//   UI.displayFavBooks();
 
-  if (bookList.innerHTML === '') {
-    UI.showAlert('You have not yet added book to favorite', 'danger');
-    UI.reloadBtn();
-  } else {
-    UI.reloadBtn();
-  }
-});
+//   if (bookList.innerHTML === '') {
+//     UI.showAlert('You have not yet added book to favorite', 'danger');
+//     UI.reloadBtn();
+//   } else {
+//     UI.reloadBtn();
+//   }
+// });
