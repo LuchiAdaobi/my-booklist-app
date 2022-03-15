@@ -238,17 +238,17 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 });
 
 // EVENT: Display favorites
-// document.querySelector('#fav').addEventListener('click', () => {
-//   const bookList = document.querySelector('#book-list');
-//   bookList.innerHTML = '';
+document.querySelector('#fav').addEventListener('click', () => {
+  const bookList = document.querySelector('#book-list');
+  bookList.innerHTML = '';
 
-//   //   Display Favorite Books
-//   UI.displayFavBooks();
+  //   Display Favorite Books
+  UI.displayFavBooks();
 
-//   if (bookList.innerHTML === '') {
-//     UI.showAlert('You have not yet added book to favorite', 'danger');
-//     UI.reloadBtn();
-//   } else {
-//     UI.reloadBtn();
-//   }
-// });
+  if (bookList.innerHTML === '') {
+    UI.showAlert('You have not yet added book to favorite', 'danger');
+    UI.reloadBtn();
+  } else {
+    UI.reloadBtn();
+  }
+});
