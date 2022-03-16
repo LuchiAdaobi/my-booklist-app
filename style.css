@@ -31,9 +31,10 @@ a {
 }
 .favorite {
   cursor: pointer;
+  color: #eb6864;
 }
 .favorite:hover {
-  color: #eb6864;
+  text-decoration: underline;
 }
 
 .container .book {
@@ -43,7 +44,7 @@ a {
   font-size: 2.5rem;
 }
 .check{
-  margin-left: .3arem;
+  margin-left: .3rem;
   padding: 1rem;
   background-color: #ec211a;
 }
